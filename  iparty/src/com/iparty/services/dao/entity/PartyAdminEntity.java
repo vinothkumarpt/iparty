@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.iparty.services.dao;
+package com.iparty.services.dao.entity;
 
 import java.sql.Timestamp;
 

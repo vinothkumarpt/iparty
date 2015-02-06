@@ -22,8 +22,8 @@ public class IPartyServiceSpringImpl implements IPartyService {
 	IPartyServiceDAO ipartyServiceDAO;
 	
 	@Override
-	public String sayPlainTextHello() {
+	public String getNewAdminId() {
 		// TODO Auto-generated method stub
-		return ipartyServiceDAO.getPlainTextHelloData();
+		return ipartyServiceDAO.fetchAdminIdSequence();
 	}
 }

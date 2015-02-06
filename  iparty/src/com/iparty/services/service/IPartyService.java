@@ -5,5 +5,5 @@ package com.iparty.services.service;
  *
  */
 public interface IPartyService {
-	public String sayPlainTextHello();
+	public String getNewAdminId();
 }
