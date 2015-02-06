@@ -1,5 +1,6 @@
 package com.iparty.services.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -8,6 +9,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+
+import com.iparty.services.dao.entity.AdminIDSequenceEntity;
+import com.iparty.services.dao.entity.PartyAdminEntity;
 
 /**
  * @author vinothkumar pt
@@ -21,16 +25,12 @@ public class IPartyServiceDAOImpl implements IPartyServiceDAO{
 	private SessionFactory sessionFactory;
 	@Override
 	@Transactional
-	public String getPlainTextHelloData() {
+	public String fetchAdminIdSequence() {
 		// TODO Auto-generated method stub
-		List<PartyAdminEntity> pael = sessionFactory.getCurrentSession().createQuery("from PartyAdminEntity").list();
-		String name = "";
-		if(pael != null && pael.size()>0){
-			PartyAdminEntity pae = pael.get(0);
-			name = pae.getAdminName();
-		}
-		
-		return name;
+		List list = sessionFactory
+				.getCurrentSession().createSQLQuery("SELECT ADMIN_ID_SEQ.NEXTVAL FROM DUAL").list();
+
+		return ((BigDecimal)list.get(0)).toString();
 	}
 
 }

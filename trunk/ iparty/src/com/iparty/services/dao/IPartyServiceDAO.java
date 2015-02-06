@@ -9,5 +9,5 @@ package com.iparty.services.dao;
  *
  */
 public interface IPartyServiceDAO {
-	public String getPlainTextHelloData();
+	public String fetchAdminIdSequence();
 }
