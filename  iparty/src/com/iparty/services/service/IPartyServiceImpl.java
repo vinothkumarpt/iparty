@@ -5,28 +5,39 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.iparty.util.IPartyConstants;
+
 
 /**
  * @author vinothkumar pt
  *
  */
 @Path("/hello")
-@Component
 public class IPartyServiceImpl{
 	
-  @Autowired
-  IPartyService ipartyService;
+/*	@Autowired
+	IPartyService ipartyService;*/
+  
+	public static ApplicationContext getApplicationContext(){
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"applicationContext.xml");
+		return context;
+	}
 
-  public void setIpartyService(IPartyService ipartyService) {
+	
+/*  public void setIpartyService(IPartyService ipartyService) {
 	this.ipartyService = ipartyService;
-  }
+  }*/
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/say")
   public String sayPlainTextHello() {
+	IPartyService ipartyService = (IPartyService)getApplicationContext()
+			.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
     return ipartyService.sayPlainTextHello();
   }
   
