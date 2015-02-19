@@ -16,12 +16,13 @@ import com.iparty.util.IPartyConstants;
  *
  */
 @Path("/service")
-public class IPartyServiceImpl{
+public class IPartyServiceImpl implements IPartyService{
 	
 /*	@Autowired
 	IPartyService ipartyService;*/
 	//Please maintain the opearation path names here
-	private String IPARTY_OPERATION_1_GET_ADMIN_ID = "/getAdminId";
+	private String IPARTY_OPERATION_1_GET_ADMIN_ID = "/newAdminId";
+	private String IPARTY_OPERATION_2_GET_PARTY_ID = "/newPartyId";
   
 	public static ApplicationContext getApplicationContext(){
 		ApplicationContext context = new ClassPathXmlApplicationContext(
@@ -32,18 +33,11 @@ public class IPartyServiceImpl{
   /* It returns a new admin user id from the DB sequence ADMIN_ID_SEQ*/
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/getNewAdminId")
+  @Path("/newAdminId")
   public String getNewAdminId() {
 	IPartyService ipartyService = (IPartyService)getApplicationContext()
 			.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
     return ipartyService.getNewAdminId();
-  }
-  
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  @Path("say2")
-  public String sayPlainTextHello2() {
-    return "Hello Jersey 2";
-  }
+  }  
 
 }
