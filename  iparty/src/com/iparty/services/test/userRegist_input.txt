@@ -1,0 +1,11 @@
+[
+    {"partyId":null,
+     "adminId":null,
+     "userId":null,
+     "adminFlag":"N",
+     "userName":null,
+     "userEmail":"sample@email.com",
+     "userStatus":1,
+     "createDttm":null,
+     "updateDttm":null}
+ ]
