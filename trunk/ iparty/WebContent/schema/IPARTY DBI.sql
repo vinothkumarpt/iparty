@@ -8,8 +8,8 @@ null,sysdate,sysdate+1,'We are inviting you to this special occasion',001,sysdat
 
 SELECT * FROM PARTY_MASTER;
 
-INSERT INTO PARTY_USER values(21,26,USER_ID_SEQ.NEXTVAL,'Y','INVITER','inviter@gmail.com',1,SYSDATE);
-INSERT INTO PARTY_USER values(21,26,USER_ID_SEQ.NEXTVAL,'N','INVITEE','invitee1@gmail.com',1,SYSDATE);
+INSERT INTO PARTY_USER values(21,26,USER_ID_SEQ.NEXTVAL,'Y','INVITER','inviter@gmail.com',1,SYSDATE,SYSDATE);
+INSERT INTO PARTY_USER values(21,26,USER_ID_SEQ.NEXTVAL,'N','INVITEE','invitee1@gmail.com',1,SYSDATE,SYSDATE);
 
 SELECT * FROM PARTY_USER;
 

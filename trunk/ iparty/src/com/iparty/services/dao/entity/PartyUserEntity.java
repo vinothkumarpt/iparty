@@ -49,6 +49,9 @@ public class PartyUserEntity implements Serializable {
 	@Column(name="USER_STATUS")
 	private Integer userStatus;
 	
+	@Column(name="CREATE_DTTM")
+	private Timestamp  createDttm;
+	
 	@Column(name="UPDATE_DTTM")
 	private Timestamp updateDttm;
 
@@ -144,10 +147,31 @@ public class PartyUserEntity implements Serializable {
 	}
 
 	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	/**
 	 * @param userStatus the userStatus to set
 	 */
 	public void setUserStatus(Integer userStatus) {
 		this.userStatus = userStatus;
+	}
+
+	/**
+	 * @return the createDttm
+	 */
+	public Timestamp getCreateDttm() {
+		return createDttm;
+	}
+
+	/**
+	 * @param createDttm the createDttm to set
+	 */
+	public void setCreateDttm(Timestamp createDttm) {
+		this.createDttm = createDttm;
 	}
 
 	/**
@@ -163,4 +187,6 @@ public class PartyUserEntity implements Serializable {
 	public void setUpdateDttm(Timestamp updateDttm) {
 		this.updateDttm = updateDttm;
 	}
+
+
 }
