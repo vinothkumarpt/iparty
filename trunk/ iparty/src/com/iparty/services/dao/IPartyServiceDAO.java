@@ -15,5 +15,5 @@ public interface IPartyServiceDAO {
 	
 	public Integer fetchPartyIdSequence();
 	
-	public String insertUserDetails(PartyUserEntity partyUserEntity);
+	public Boolean insertUserDetails(PartyUserEntity partyUserEntity);
 }
