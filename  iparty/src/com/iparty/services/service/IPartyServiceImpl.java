@@ -7,11 +7,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.iparty.controllers.CommonController;
 import com.iparty.services.dao.entity.PartyUserEntity;
+import com.iparty.services.service.response.PartyUserResponse;
 import com.iparty.util.IPartyConstants;
+import com.iparty.util.IPartyUtil;
 
 
 /**
@@ -20,7 +24,9 @@ import com.iparty.util.IPartyConstants;
  */
 @Path("/service")
 public class IPartyServiceImpl implements IPartyService{
-	private String CLASS_NAME = "IPartyServiceImpl";
+	private final  String CLASS_NAME = "IPartyServiceImpl";
+	
+	private final static Logger logger = Logger.getLogger(CommonController.class);
 	
 /*	@Autowired
 	IPartyService ipartyService;*/
@@ -61,11 +67,18 @@ public class IPartyServiceImpl implements IPartyService{
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/userRegist")
-  public String registerPartyUser(PartyUserEntity partyUserEntity[]) {
-	// TODO Auto-generated method stub
+  public PartyUserResponse registerPartyUser(PartyUserEntity partyUserEntity[]) {
+
+	String methodName="registerPartyUser";
+	logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName));  
+	//Calling Spring
 	IPartyService ipartyService = (IPartyService)getApplicationContext()
 				.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
+	
+	logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName));  
+	
 	return ipartyService.registerPartyUser(partyUserEntity);  
   }  
+
 
 }
