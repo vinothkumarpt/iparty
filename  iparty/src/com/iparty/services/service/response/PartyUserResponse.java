@@ -12,6 +12,7 @@ public class PartyUserResponse {
 	private Integer partyId;
 	private Integer userCnt;
 	private String status;
+	private String comments;
 	/**
 	 * @return the adminId
 	 */
@@ -59,5 +60,17 @@ public class PartyUserResponse {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	/**
+	 * @return the comments
+	 */
+	public String getComments() {
+		return comments;
+	}
+	/**
+	 * @param comments the comments to set
+	 */
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 }

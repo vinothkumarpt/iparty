@@ -1,0 +1,9 @@
+URL:http://localhost:8090/iparty/rest/service/adminRegist
+Method: POST
+
+{"adminId":null,
+"adminName":"admin1",
+"adminPassword":"xxxxxx",
+"adminEmail":"admin@gmail.com",
+"createDttm":null}
+ 

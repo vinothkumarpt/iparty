@@ -1,11 +1,13 @@
 package com.iparty.services.dao;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,16 +58,66 @@ public class IPartyServiceDAOImpl implements IPartyServiceDAO{
 	public Boolean insertUserDetails(PartyUserEntity partyUserEntity) {
 		String methodName="insertUserDetails";
 		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
+		boolean saved = false;
+		Session session = sessionFactory
+		.getCurrentSession();
+		
+		Serializable obj = session.save(partyUserEntity);
+		//session.getTransaction().commit();		
+		if(obj != null){
+			saved = true;
+		}
+		
+		logger.debug("Saved: "+saved);
+		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName));  
+		
+		return saved;
+	}
+	
+	@Override
+	@Transactional
+	public Boolean deleteUnsave(Integer adminId, Integer partyId) {
+		String methodName="deleteUnsave";
+		boolean deleted = false;
+		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
+		Session session = sessionFactory
+				.getCurrentSession();
+		Query query = session.createQuery("delete PartyUserEntity where "
+				+ "adminId = :AdminId and partyId= :PartyId");
+		query.setInteger("AdminId", adminId);
+		query.setInteger("PartyId", partyId);
+		
+		int updatedCnt = query.executeUpdate();
+		logger.debug("No of users deleted "+updatedCnt);
+		
+		if(updatedCnt>0){
+			deleted = true;
+		}
+		
+		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName));  
+		return deleted;
+	}
+	
+	@Override
+	@Transactional
+	public Boolean insertAdminDetails(PartyAdminEntity partyAdminEntity) {
+		String methodName="insertAdminDetails";
+		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
+		
+		boolean saved = false;
 		
 		Session session = sessionFactory
 		.getCurrentSession();
 		
-		session.save(partyUserEntity);
-		//session.getTransaction().commit();		
+		Serializable obj = session.save(partyAdminEntity);
 		
+		if(obj != null){
+			saved = true;
+		}
+		logger.debug("Saved: "+saved);
 		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName));  
 		
-		return true;
+		return saved;
 	}
 
 }
