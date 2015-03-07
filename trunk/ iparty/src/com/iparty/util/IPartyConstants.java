@@ -17,8 +17,10 @@ public class IPartyConstants {
 	public static char DOT = '.';
 	public static String STR_METHOD_STARTS = " Starts";
 	public static String STR_METHOD_ENDS = " Ends";
+	public static String STR_SPACE=" ";
 	
 	//Service
 	public static String DB_STATE_SAVED = "SAVED";
+	
 	
 }

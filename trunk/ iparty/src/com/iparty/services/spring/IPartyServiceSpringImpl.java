@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.iparty.controllers.CommonController;
 import com.iparty.services.dao.IPartyServiceDAO;
+import com.iparty.services.dao.entity.PartyAdminEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
 import com.iparty.services.service.IPartyService;
 import com.iparty.services.service.response.PartyUserResponse;
@@ -101,8 +102,6 @@ public class IPartyServiceSpringImpl implements IPartyService {
 				partyUser.setCreateDttm(new Timestamp(currentDate.getTime()));
 				//Calling DAO
 				ipartyServiceDAO.insertUserDetails(partyUser);
-				
-				
 			}
 		}
 		response.setAdminId(adminId);
@@ -114,6 +113,48 @@ public class IPartyServiceSpringImpl implements IPartyService {
 		logger.debug("Party Id: "+partyId);
 		
 		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName)); 
+		return response;
+	}
+
+	@Override
+	public Boolean trash(Integer adminId, Integer partyId) {
+		String methodName="trash";
+		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
+		return ipartyServiceDAO.deleteUnsave(adminId, partyId);
+	}
+
+	@Override
+	public PartyUserResponse registerAdmin(PartyAdminEntity partyAdminEntity) {
+		
+		String methodName="registerAdmin";
+		
+		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
+		PartyUserResponse response = new PartyUserResponse();
+		
+	
+		if(partyAdminEntity != null){
+			//Setting up Admin ID if it is not sent
+			if(partyAdminEntity.getAdminId() == null||partyAdminEntity.getAdminId()==0){
+				partyAdminEntity.setAdminId(getNewAdminId());
+			}
+			response.setAdminId(partyAdminEntity.getAdminId());
+			Date currentDate = new Date();
+
+			partyAdminEntity.setCreateDttm(new Timestamp(currentDate.getTime()));
+			//Calling DAO
+			
+			boolean adminStatus = ipartyServiceDAO.insertAdminDetails(partyAdminEntity);
+			
+			if(adminStatus){
+				response.setStatus(IPartyConstants.DB_STATE_SAVED);
+			}
+		}
+				
+		logger.debug("Admin Id: "+response.getAdminId());
+		logger.debug("Status:  "+response.getStatus());
+		
+		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName)); 
+		
 		return response;
 	}
 }
