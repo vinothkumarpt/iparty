@@ -13,7 +13,7 @@ public class CommonController {
     // Logger instance named "MyApp".
 	private final static Logger logger = Logger.getLogger(CommonController.class);
     
-    @RequestMapping(value="/",method=RequestMethod.GET)
+    @RequestMapping(value="/home",method=RequestMethod.GET)
 	public ModelAndView welcome(){
     	logger.debug("Start welcome");
 		ModelAndView model = new ModelAndView();
@@ -21,5 +21,14 @@ public class CommonController {
 		logger.debug("End welcome");
 		return model;
 	}
+    
+    @RequestMapping(value="/beginparty",method=RequestMethod.GET)
+    public ModelAndView beginParty(){
+    	logger.debug("Start beginParty");
+		ModelAndView model = new ModelAndView();
+		model.setViewName("startparty");
+		logger.debug("End beginParty");
+		return model;
+    }
 
 }
