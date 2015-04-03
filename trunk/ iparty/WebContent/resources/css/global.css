@@ -1,0 +1,89 @@
+
+html,body {
+	height: 100%;
+	width: 100%;
+}
+
+#header {
+	height:10%;
+	width: 1200px;
+	border: 1px solid red ;
+	
+}
+.center_page{
+	width:1200px;
+	height:100%;
+	margin-left: auto;
+	margin-right:auto;	
+}
+#header_left{
+	width: 595px; 
+	height: 100%;
+	float: left;
+	background-color: black;
+	display:inline-table;
+}
+#header_left_text_1{
+		text-align: center;
+		display : inline-block;
+		color: white;
+		padding-left:70px;
+		padding-top : 10px;
+		font-size: 40px; 
+		font-weight: bolder;
+}
+#header_left_text_2{
+		text-align: center;
+		display : inline-block;
+		color: white;
+		padding-left:30px;
+		padding-top : 10px;
+		font-size: 20px; 
+		font-weight: bolder;
+}
+
+#header_right{
+	width: 595px;
+	height: 100%; 
+	float: right; 
+	background-color: gray;
+	display: inline-table;
+}
+#login_input{
+	padding-top: 23px; 
+	padding-left: 34px; 
+	display: inline-block;
+}
+#header_middle{
+	width:2%;
+	height:100%;
+	float:left;
+	background-color: white;
+	
+}
+
+#main_content{
+	height:85%;
+	width: 100%;
+	border: 1px solid green;
+}
+#footer{
+	height: 5%;
+	width: 100%;
+	border: 1px solid black;
+}
+.login_input{
+	margin-left:10px;
+}
+.remove{
+	background-image: url("../images/remove-icon_16.png");
+	width: 16px;
+	height: 16px;
+	display: block;
+}
+.add{
+	background-image: url("../images/add-icon_16.png");
+	width: 16px;
+	height: 16px;
+	display: block;
+}
