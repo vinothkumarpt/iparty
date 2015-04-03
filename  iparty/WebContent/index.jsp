@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+ 
+<jsp:forward page="startpart.jsp"></jsp:forward>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,7 +17,7 @@
 				I Party
 			</span>
 			<span id="header_left_text_2">
-				Come, Organize and Celebrate
+				Come, Organize and Celebrate 
 			</span>
 		</div>
 		
