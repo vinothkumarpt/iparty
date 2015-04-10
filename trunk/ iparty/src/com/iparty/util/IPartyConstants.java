@@ -22,5 +22,12 @@ public class IPartyConstants {
 	//Service
 	public static String DB_STATE_SAVED = "SAVED";
 	
+	//General
+	public static int INT_ZERO = 0;
+	
+	public static int INT_ONE = 0;
+	
+	//Exception Message 
+	public static String EXCEP_MESSAGE_DUPLICATE_ADMIN_ID = "email id already exist";
 	
 }

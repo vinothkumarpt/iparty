@@ -18,6 +18,7 @@ import com.iparty.services.dao.entity.PartyUserEntity;
 import com.iparty.services.service.IPartyService;
 import com.iparty.services.service.response.PartyUserResponse;
 import com.iparty.util.IPartyConstants;
+import com.iparty.util.IPartyException;
 import com.iparty.util.IPartyUtil;
 
 
@@ -58,13 +59,15 @@ public class IPartyServiceSpringImpl implements IPartyService {
 		int adminId = 0;
 		int partyId = 0;
 		
-		if(partyUserEntity != null){
+		if(IPartyUtil.isNotNull(partyUserEntity)){
 			
 			for(PartyUserEntity partyUser:partyUserEntity){
 				//Setting up Admin ID if it is not sent
 				userId++;
-				if(partyUser.getAdminId() == null||partyUser.getAdminId()==0){
-					if(adminId == 0){
+				if(IPartyUtil.isNull(partyUser.getAdminId()) || 
+						partyUser.getAdminId() == IPartyConstants.INT_ZERO){
+					
+					if(adminId == IPartyConstants.INT_ZERO){
 						adminId = getNewAdminId();
 						partyUser.setAdminId(adminId);
 					}
@@ -77,8 +80,9 @@ public class IPartyServiceSpringImpl implements IPartyService {
 				}
 				
 				//Setting up Party ID if it not sent
-				if(partyUser.getPartyId() == null || partyUser.getPartyId()==0){
-					if(partyId == 0){
+				if(IPartyUtil.isNull(partyUser.getPartyId()) || 
+						partyUser.getPartyId() == IPartyConstants.INT_ZERO){
+					if(partyId == IPartyConstants.INT_ZERO){
 						partyId = getNewPartyId();
 						partyUser.setPartyId(partyId);
 					}
@@ -93,13 +97,12 @@ public class IPartyServiceSpringImpl implements IPartyService {
 
 				partyUser.setUserId(userId);
 				
-				if(partyUser.getUserName() == null){
+				if(IPartyUtil.isNull(partyUser.getUserName())){
 					partyUser.setUserName("USER_"+userId);
 				}
 				
-				Date currentDate = new Date();
-				partyUser.setUpdateDttm(new Timestamp(currentDate.getTime()));
-				partyUser.setCreateDttm(new Timestamp(currentDate.getTime()));
+				partyUser.setUpdateDttm(IPartyUtil.timeStampNow());
+				partyUser.setCreateDttm(IPartyUtil.timeStampNow());
 				//Calling DAO
 				ipartyServiceDAO.insertUserDetails(partyUser);
 			}
@@ -132,18 +135,27 @@ public class IPartyServiceSpringImpl implements IPartyService {
 		PartyUserResponse response = new PartyUserResponse();
 		
 	
-		if(partyAdminEntity != null){
+		if(IPartyUtil.isNotNull(partyAdminEntity)){
 			//Setting up Admin ID if it is not sent
-			if(partyAdminEntity.getAdminId() == null||partyAdminEntity.getAdminId()==0){
+			if(IPartyUtil.isNull(partyAdminEntity.getAdminId()) || 
+					partyAdminEntity.getAdminId() == IPartyConstants.INT_ZERO){
 				partyAdminEntity.setAdminId(getNewAdminId());
 			}
 			response.setAdminId(partyAdminEntity.getAdminId());
-			Date currentDate = new Date();
 
-			partyAdminEntity.setCreateDttm(new Timestamp(currentDate.getTime()));
+			partyAdminEntity.setCreateDttm(IPartyUtil.timeStampNow());
 			//Calling DAO
 			
-			boolean adminStatus = ipartyServiceDAO.insertAdminDetails(partyAdminEntity);
+			boolean adminStatus = false;
+			
+			try{
+				adminStatus = ipartyServiceDAO.insertAdminDetails(partyAdminEntity);
+			}
+			catch(org.springframework.dao.DataIntegrityViolationException e){
+				new IPartyException(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_ADMIN_ID, e).log();
+				adminStatus = false;
+				response.setComments(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_ADMIN_ID);
+			}
 			
 			if(adminStatus){
 				response.setStatus(IPartyConstants.DB_STATE_SAVED);
