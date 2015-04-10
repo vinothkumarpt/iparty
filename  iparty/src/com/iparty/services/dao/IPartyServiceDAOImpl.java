@@ -11,13 +11,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.iparty.controllers.CommonController;
-import com.iparty.services.dao.entity.AdminIDSequenceEntity;
 import com.iparty.services.dao.entity.PartyAdminEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
+import com.iparty.util.IPartyConstants;
 import com.iparty.util.IPartyUtil;
 
 /**
@@ -42,6 +41,7 @@ public class IPartyServiceDAOImpl implements IPartyServiceDAO{
 
 		return ((BigDecimal)list.get(0)).intValue();
 	}
+	
 	@Override
 	@Transactional
 	public Integer fetchPartyIdSequence() {
@@ -64,7 +64,7 @@ public class IPartyServiceDAOImpl implements IPartyServiceDAO{
 		
 		Serializable obj = session.save(partyUserEntity);
 		//session.getTransaction().commit();		
-		if(obj != null){
+		if(IPartyUtil.isNotNull(obj)){
 			saved = true;
 		}
 		
@@ -84,13 +84,14 @@ public class IPartyServiceDAOImpl implements IPartyServiceDAO{
 				.getCurrentSession();
 		Query query = session.createQuery("delete PartyUserEntity where "
 				+ "adminId = :AdminId and partyId= :PartyId");
+		
 		query.setInteger("AdminId", adminId);
 		query.setInteger("PartyId", partyId);
 		
 		int updatedCnt = query.executeUpdate();
 		logger.debug("No of users deleted "+updatedCnt);
 		
-		if(updatedCnt>0){
+		if(updatedCnt > IPartyConstants.INT_ZERO){
 			deleted = true;
 		}
 		
@@ -102,6 +103,7 @@ public class IPartyServiceDAOImpl implements IPartyServiceDAO{
 	@Transactional
 	public Boolean insertAdminDetails(PartyAdminEntity partyAdminEntity) {
 		String methodName="insertAdminDetails";
+		
 		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
 		
 		boolean saved = false;
@@ -111,7 +113,7 @@ public class IPartyServiceDAOImpl implements IPartyServiceDAO{
 		
 		Serializable obj = session.save(partyAdminEntity);
 		
-		if(obj != null){
+		if(IPartyUtil.isNotNull(obj)){
 			saved = true;
 		}
 		logger.debug("Saved: "+saved);
