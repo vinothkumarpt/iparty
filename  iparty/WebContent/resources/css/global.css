@@ -87,3 +87,28 @@ html,body {
 	height: 16px;
 	display: block;
 }
+.next{
+	background-image: url("../images/next-button.png");
+	width: 120px;
+	height: 40px;
+	display: block;
+	float:right;
+	margin-top:10px;
+}
+#emailIdContainer{
+	width: 400px;
+	float:right;
+	border-color: blue;
+	border-style: solid;
+	padding-right:100px;
+	height:280px;
+	
+}
+#membersArea{
+	width:400px;
+	float: left;
+	padding-left:10px;
+	border-color:red;
+	border-style: solid;
+	height: 280px;
+}
