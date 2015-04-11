@@ -33,7 +33,7 @@
 		
 	</div>
 	<div id='main_content'>
-	<div style="width:100%;padding-top:100px;">
+	<div style="width:100%;padding-top:50px;">
 		<span style="padding-left:30px;">
 			First time User? Let us begin a Party
 		</span>
@@ -43,23 +43,23 @@
 			Add members
 		</span>
 	</div>
-	<div style="width:100%;">
-		<div id="membersArea" style="width:400px;float: left;padding-left:10px;border-color:red;border-style: solid;">
+	<div style="width:100%;height:300px;">
+		<div id="membersArea">
 			<textarea  style="width:300px;height: 100px;">
 			</textarea>
 		</div>
-		<div id='emailIdContainer'  style="width: 400px;float:right;border-color: blue;border-style: solid;padding-right:100px;">
-				<span style="padding-left: 60px;]">Name (optional)</span>
+		<div id='emailIdContainer'>
+				<span style="padding-left: 60px;">Name (optional)</span>
 				<table>
 					<tr ng-repeat="emailObj in emailIds">
 						<td>
 							{{'invite'+($index+1)}}
 						</td>
 						<td>
-							<input type="text" ng-model="emailObj.name"></input>
+							<input type="text" ng-model="emailObj.userName"></input>
 						</td>
 						<td>
-							<input type="text" ng-model="emailObj.emailId" ></input>
+							<input type="text" ng-model="emailObj.userEmail" ></input>
 						</td>
 						<td>
 							<div class="add" ng-click="handleAdd()"></div>
@@ -71,8 +71,15 @@
 				</table>
 			</div>
 	</div>
+	<div  id="actionButtonSec" style="width:100%;">
+		
+		<div id="nextBtn" class="next"  ng-click="handleEmailSave()">
 			
+		</div>
 	</div>
+		
+	</div>
+	
 	<div id='footer'>
 		<span style="display: block;text-align: center;"> To do footer section </span>
 	</div>
@@ -81,17 +88,17 @@
 <script>
 var mainApp = angular.module("mainApp", []);
 
-mainApp.controller('mainController', function($scope) {
+mainApp.controller('mainController', function($scope,$http) {
    $scope.loginUser = {
       userName: "",
       passWord: ""
      
    };
    $scope.emailIds = [
-                      {name:'',emailId:''},
-                      {name:'',emailId:''},
-                      {name:'',emailId:''},
-                      {name:'',emailId:''}
+                      {userName:'',userEmail:''},
+                      {userName:'',userEmail:''},
+                      {userName:'',userEmail:''},
+                      {userName:'',userEmail:''}
                       ];
    $scope.handleAdd = function(){
 	   
@@ -100,6 +107,15 @@ mainApp.controller('mainController', function($scope) {
    $scope.handleRmv = function(index){
 	   
 	   $scope.emailIds.splice(index,1);
+   }
+   $scope.handleEmailSave = function(){
+	   $http.post('http://localhost:8081/iparty/rest/service/userRegist',$scope.emailIds).
+	   success(function(){
+		    alert("successfully saved");
+	   }).error(function(){
+		   alert("failure ");
+	   });
+	   
    }
 });
 </script>
