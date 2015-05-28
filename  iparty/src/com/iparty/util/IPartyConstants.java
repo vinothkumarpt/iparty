@@ -30,4 +30,7 @@ public class IPartyConstants {
 	//Exception Message 
 	public static String EXCEP_MESSAGE_DUPLICATE_ADMIN_ID = "email id already exist";
 	
+	//Exception Message 
+	public static String EXCEP_MESSAGE_DUPLICATE_CATEGORY = "category already exist";
+	
 }

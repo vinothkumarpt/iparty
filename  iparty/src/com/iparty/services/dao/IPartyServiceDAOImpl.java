@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.iparty.controllers.CommonController;
+import com.iparty.services.dao.entity.CategoryMasterEntity;
 import com.iparty.services.dao.entity.PartyAdminEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
 import com.iparty.util.IPartyConstants;
@@ -118,6 +119,27 @@ public class IPartyServiceDAOImpl implements IPartyServiceDAO{
 		}
 		logger.debug("Saved: "+saved);
 		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName));  
+		
+		return saved;
+	}
+
+	@Override
+	@Transactional
+	public Boolean insertCategory(CategoryMasterEntity categoryMasterEntity) {
+		String methodName="insertCategory";
+		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
+
+		boolean saved = false;
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		Serializable obj = session.save(categoryMasterEntity);
+		
+		if(IPartyUtil.isNotNull(obj)){
+			saved = true;
+		}
+		logger.debug("Saved: "+saved);
+		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName)); 
 		
 		return saved;
 	}

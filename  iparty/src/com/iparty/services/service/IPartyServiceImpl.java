@@ -16,7 +16,7 @@ import com.iparty.controllers.CommonController;
 import com.iparty.services.dao.entity.CategoryMasterEntity;
 import com.iparty.services.dao.entity.PartyAdminEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
-import com.iparty.services.service.response.PartyUserResponse;
+import com.iparty.services.service.response.PartyResponse;
 import com.iparty.util.IPartyConstants;
 import com.iparty.util.IPartyUtil;
 
@@ -73,7 +73,7 @@ public class IPartyServiceImpl implements IPartyService{
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/userRegist")
-  public PartyUserResponse registerPartyUser(PartyUserEntity partyUserEntity[]) {
+  public PartyResponse registerPartyUser(PartyUserEntity partyUserEntity[]) {
 
 	String methodName="registerPartyUser";
 	logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName));  
@@ -81,7 +81,7 @@ public class IPartyServiceImpl implements IPartyService{
 	IPartyService ipartyService = (IPartyService)getApplicationContext()
 				.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
 	
-	PartyUserResponse userResponse = ipartyService.registerPartyUser(partyUserEntity);  
+	PartyResponse userResponse = ipartyService.registerPartyUser(partyUserEntity);  
 	logger.debug("Party User Response: "+userResponse.getAdminId()
 			+IPartyConstants.STR_SPACE+ 
 			userResponse.getPartyId()
@@ -120,7 +120,7 @@ public class IPartyServiceImpl implements IPartyService{
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/adminRegist")
-  public PartyUserResponse registerAdmin(PartyAdminEntity partyAdminEntity) {
+  public PartyResponse registerAdmin(PartyAdminEntity partyAdminEntity) {
 	String methodName="registerAdmin";
 	
 	logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName));  
@@ -128,7 +128,7 @@ public class IPartyServiceImpl implements IPartyService{
 	IPartyService ipartyService = (IPartyService)getApplicationContext()
 				.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
 	
-	PartyUserResponse userResponse = ipartyService.registerAdmin(partyAdminEntity);  
+	PartyResponse userResponse = ipartyService.registerAdmin(partyAdminEntity);  
 	
 	logger.debug("Admin Response: "+userResponse.getAdminId()+
 			IPartyConstants.STR_SPACE+userResponse.getStatus());
@@ -143,7 +143,7 @@ public class IPartyServiceImpl implements IPartyService{
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/newCateg")
-  public PartyUserResponse newCategory(CategoryMasterEntity categoryMasterEntity) {
+  public PartyResponse newCategory(CategoryMasterEntity categoryMasterEntity) {
 	String methodName="newCategory";
 	
 	logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName));  
@@ -151,7 +151,7 @@ public class IPartyServiceImpl implements IPartyService{
 	IPartyService ipartyService = (IPartyService)getApplicationContext()
 				.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
 	
-	PartyUserResponse userResponse = ipartyService.newCategory(categoryMasterEntity);  
+	PartyResponse userResponse = ipartyService.newCategory(categoryMasterEntity);  
 	
 	logger.debug("Admin Response: "+userResponse.getAdminId()+
 			IPartyConstants.STR_SPACE+userResponse.getStatus());

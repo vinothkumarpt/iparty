@@ -13,10 +13,11 @@ import org.springframework.stereotype.Component;
 
 import com.iparty.controllers.CommonController;
 import com.iparty.services.dao.IPartyServiceDAO;
+import com.iparty.services.dao.entity.CategoryMasterEntity;
 import com.iparty.services.dao.entity.PartyAdminEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
 import com.iparty.services.service.IPartyService;
-import com.iparty.services.service.response.PartyUserResponse;
+import com.iparty.services.service.response.PartyResponse;
 import com.iparty.util.IPartyConstants;
 import com.iparty.util.IPartyException;
 import com.iparty.util.IPartyUtil;
@@ -48,11 +49,11 @@ public class IPartyServiceSpringImpl implements IPartyService {
 	}
 
 	@Override
-	public PartyUserResponse registerPartyUser(PartyUserEntity[] partyUserEntity) {
+	public PartyResponse registerPartyUser(PartyUserEntity[] partyUserEntity) {
 		
 		String methodName="registerPartyUser";
 		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
-		PartyUserResponse response = new PartyUserResponse();
+		PartyResponse response = new PartyResponse();
 		
 		int userId = 0;
 		
@@ -127,12 +128,12 @@ public class IPartyServiceSpringImpl implements IPartyService {
 	}
 
 	@Override
-	public PartyUserResponse registerAdmin(PartyAdminEntity partyAdminEntity) {
+	public PartyResponse registerAdmin(PartyAdminEntity partyAdminEntity) {
 		
 		String methodName="registerAdmin";
 		
 		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
-		PartyUserResponse response = new PartyUserResponse();
+		PartyResponse response = new PartyResponse();
 		
 	
 		if(IPartyUtil.isNotNull(partyAdminEntity)){
@@ -166,6 +167,33 @@ public class IPartyServiceSpringImpl implements IPartyService {
 		logger.debug("Status:  "+response.getStatus());
 		
 		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName)); 
+		
+		return response;
+	}
+
+	@Override
+	public PartyResponse newCategory(CategoryMasterEntity categoryMasterEntity) {
+		String methodName="newCategory";
+		
+		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
+		
+		PartyResponse response = new PartyResponse();
+		if(IPartyUtil.isNotNull(categoryMasterEntity)){
+			boolean categStatus = false;
+			try{
+				categStatus = ipartyServiceDAO.insertCategory(categoryMasterEntity);
+			}
+			catch(org.springframework.dao.DataIntegrityViolationException e){
+				new IPartyException(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_CATEGORY, e).log();
+				categStatus = false;
+				response.setComments(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_CATEGORY);
+			}
+			
+			if(categStatus){
+				response.setStatus(IPartyConstants.DB_STATE_SAVED);
+			}
+		}
+		
 		
 		return response;
 	}

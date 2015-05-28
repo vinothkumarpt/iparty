@@ -3,6 +3,7 @@
  */
 package com.iparty.services.dao;
 
+import com.iparty.services.dao.entity.CategoryMasterEntity;
 import com.iparty.services.dao.entity.PartyAdminEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
 
@@ -21,4 +22,6 @@ public interface IPartyServiceDAO {
 	public Boolean deleteUnsave(Integer adminId, Integer partyId);
 	
 	public Boolean insertAdminDetails(PartyAdminEntity partyAdminEntity);
+	
+	public Boolean insertCategory(CategoryMasterEntity categoryMasterEntity);
 }
