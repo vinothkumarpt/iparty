@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.iparty.controllers.CommonController;
+import com.iparty.services.dao.entity.CategoryMasterEntity;
 import com.iparty.services.dao.entity.PartyAdminEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
 import com.iparty.services.service.response.PartyUserResponse;
@@ -37,7 +38,8 @@ public class IPartyServiceImpl implements IPartyService{
 	private String IPARTY_OPERATION_2_GET_PARTY_ID = "/newPartyId";
 	private String IPARTY_OPERATION_3_USER_REGISTRATION = "/userRegist";
 	private String IPARTY_OPERATION_4_PARTY_TRASH = "/trash";
-	private String IPARTY_OPERATION_5_ADMIN_REGISTRATION = "adminRegist";
+	private String IPARTY_OPERATION_5_ADMIN_REGISTRATION = "/adminRegist";
+	private String IPARTY_OPERATION_6_CREATE_ITEM_CATEGORY = "/newCateg";
 	
 	public static ApplicationContext getApplicationContext(){
 		ApplicationContext context = new ClassPathXmlApplicationContext(
@@ -127,6 +129,29 @@ public class IPartyServiceImpl implements IPartyService{
 				.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
 	
 	PartyUserResponse userResponse = ipartyService.registerAdmin(partyAdminEntity);  
+	
+	logger.debug("Admin Response: "+userResponse.getAdminId()+
+			IPartyConstants.STR_SPACE+userResponse.getStatus());
+	
+	logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName));  
+	
+	return userResponse; 	
+  } 
+  
+  /* It creates a new category for the item*/
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/newCateg")
+  public PartyUserResponse newCategory(CategoryMasterEntity categoryMasterEntity) {
+	String methodName="newCategory";
+	
+	logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName));  
+	//Calling Spring
+	IPartyService ipartyService = (IPartyService)getApplicationContext()
+				.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
+	
+	PartyUserResponse userResponse = ipartyService.newCategory(categoryMasterEntity);  
 	
 	logger.debug("Admin Response: "+userResponse.getAdminId()+
 			IPartyConstants.STR_SPACE+userResponse.getStatus());

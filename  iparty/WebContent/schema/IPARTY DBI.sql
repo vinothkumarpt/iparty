@@ -19,8 +19,8 @@ insert into PARTY_ITEMS values(21,22,2,'Soft Drink','pepsi',500,sysdate);
 
 SELECT * FROM PARTY_ITEMS;
 
-insert into CATEGORY_MASTER values(1,'Food','Item name','Restaurant',1);
-insert into CATEGORY_MASTER values(2,'Drink','Type','Brand Name',2);
+insert into CATEGORY_MASTER values(287, 1,'Food','Item name','Restaurant',1);
+insert into CATEGORY_MASTER values(287, 2,'Drink','Type','Brand Name',2);
 SELECT * FROM CATEGORY_MASTER;
 
 insert into unit_master values(1,'Number');

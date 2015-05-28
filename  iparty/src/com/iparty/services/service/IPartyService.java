@@ -1,5 +1,6 @@
 package com.iparty.services.service;
 
+import com.iparty.services.dao.entity.CategoryMasterEntity;
 import com.iparty.services.dao.entity.PartyAdminEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
 import com.iparty.services.service.response.PartyUserResponse;
@@ -18,4 +19,6 @@ public interface IPartyService {
 	public Boolean trash(Integer adminId, Integer partyId);
 	
 	public PartyUserResponse registerAdmin(PartyAdminEntity partyAdminEntity);
+	
+	public PartyUserResponse newCategory(CategoryMasterEntity categoryMasterEntity);
 }
