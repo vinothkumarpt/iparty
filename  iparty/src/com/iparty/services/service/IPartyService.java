@@ -2,6 +2,7 @@ package com.iparty.services.service;
 
 import com.iparty.services.dao.entity.CategoryMasterEntity;
 import com.iparty.services.dao.entity.PartyAdminEntity;
+import com.iparty.services.dao.entity.PartyItemsEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
 import com.iparty.services.service.response.PartyResponse;
 
@@ -21,4 +22,8 @@ public interface IPartyService {
 	public PartyResponse registerAdmin(PartyAdminEntity partyAdminEntity);
 	
 	public PartyResponse newCategory(CategoryMasterEntity categoryMasterEntity);
+	
+	public PartyResponse saveItems(PartyItemsEntity partyItemsEntity[]);
+	
+	public PartyResponse deleteItems(PartyItemsEntity partyItemsEntity[]);
 }

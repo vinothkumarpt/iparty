@@ -15,6 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.iparty.controllers.CommonController;
 import com.iparty.services.dao.entity.CategoryMasterEntity;
 import com.iparty.services.dao.entity.PartyAdminEntity;
+import com.iparty.services.dao.entity.PartyItemsEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
 import com.iparty.services.service.response.PartyResponse;
 import com.iparty.util.IPartyConstants;
@@ -40,6 +41,9 @@ public class IPartyServiceImpl implements IPartyService{
 	private String IPARTY_OPERATION_4_PARTY_TRASH = "/trash";
 	private String IPARTY_OPERATION_5_ADMIN_REGISTRATION = "/adminRegist";
 	private String IPARTY_OPERATION_6_CREATE_ITEM_CATEGORY = "/newCateg";
+	private String IPARTY_OPERATION_7_SAVE_ITEMS = "/saveItems";
+	private String IPARTY_OPERATION_8_DELETE_ITEMS = "/delItems";
+	
 	
 	public static ApplicationContext getApplicationContext(){
 		ApplicationContext context = new ClassPathXmlApplicationContext(
@@ -151,7 +155,12 @@ public class IPartyServiceImpl implements IPartyService{
 	IPartyService ipartyService = (IPartyService)getApplicationContext()
 				.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
 	
-	PartyResponse userResponse = ipartyService.newCategory(categoryMasterEntity);  
+	PartyResponse userResponse = null;
+	
+	if(IPartyUtil.isNotNull(categoryMasterEntity)){
+		userResponse =  ipartyService.newCategory(categoryMasterEntity); 
+	}
+
 	
 	logger.debug("Admin Response: "+userResponse.getAdminId()+
 			IPartyConstants.STR_SPACE+userResponse.getStatus());
@@ -159,6 +168,61 @@ public class IPartyServiceImpl implements IPartyService{
 	logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName));  
 	
 	return userResponse; 	
+  }
+
+  /* It saves party user items in the PARTY_ITEMS table*/
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/saveItems")
+  public PartyResponse saveItems(PartyItemsEntity[] partyItemsEntity) {
+		String methodName="saveItems";
+		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName));  
+		//Calling Spring
+		IPartyService ipartyService = (IPartyService)getApplicationContext()
+					.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
+		
+		PartyResponse userResponse = null;
+		
+		if(IPartyUtil.isNotNull(partyItemsEntity)){
+			userResponse = ipartyService.saveItems(partyItemsEntity);
+		}
+				
+		logger.debug("Party User Response: "
+				+IPartyConstants.STR_SPACE+ 
+				userResponse.getPartyId()
+				+IPartyConstants.STR_SPACE+userResponse.getStatus());
+		
+		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName));  
+		
+		return userResponse;
+  }
+
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/delItems")
+  public PartyResponse deleteItems(PartyItemsEntity[] partyItemsEntity) {
+	  String methodName="deleteItems";
+		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName));  
+		//Calling Spring
+		IPartyService ipartyService = (IPartyService)getApplicationContext()
+					.getBean(IPartyConstants.IPARTY_SERVICE_SPRING_BEAN_ID);
+		
+		PartyResponse userResponse = null;
+		
+		if(IPartyUtil.isNotNull(partyItemsEntity) && partyItemsEntity.length > IPartyConstants.INT_ZERO ){
+			userResponse = ipartyService.deleteItems(partyItemsEntity);  
+		}
+		
+		logger.debug("Party User Response: "
+				+IPartyConstants.STR_SPACE+ 
+				userResponse.getPartyId()
+				+IPartyConstants.STR_SPACE+userResponse.getStatus());
+		
+		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName));  
+		
+		return userResponse;
   }  
 
 }

@@ -22,6 +22,12 @@ public class IPartyConstants {
 	//Service
 	public static String DB_STATE_SAVED = "SAVED";
 	
+	public static String DB_STATE_NOT_SAVED = "NOT SAVED";
+
+	public static String DB_STATE_DELETED = "DELETED";
+	
+	public static String DB_STATE_NOT_DELETED = "NOT DELETED";
+	
 	//General
 	public static int INT_ZERO = 0;
 	
@@ -32,5 +38,6 @@ public class IPartyConstants {
 	
 	//Exception Message 
 	public static String EXCEP_MESSAGE_DUPLICATE_CATEGORY = "category already exist";
+	public static String EXCEP_MESSAGE_DUPLICATE_ITEM = "Item already exist";
 	
 }

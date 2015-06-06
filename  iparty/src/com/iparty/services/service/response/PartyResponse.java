@@ -13,6 +13,7 @@ public class PartyResponse {
 	private Integer userCnt;
 	private String status;
 	private String comments;
+	private Integer recordCount;
 	/**
 	 * @return the adminId
 	 */
@@ -72,5 +73,17 @@ public class PartyResponse {
 	 */
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+	/**
+	 * @return the recordCount
+	 */
+	public Integer getRecordCount() {
+		return recordCount;
+	}
+	/**
+	 * @param recordCount the recordCount to set
+	 */
+	public void setRecordCount(Integer recordCount) {
+		this.recordCount = recordCount;
 	}
 }

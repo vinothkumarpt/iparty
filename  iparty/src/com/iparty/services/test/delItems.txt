@@ -1,0 +1,31 @@
+URL:http://localhost:8090/iparty/rest/service/delItems
+Method: POST
+
+[
+    {"partyId":21,
+     "userId":287,
+     "categoryId":1,
+     "subCategoryOneValue":"Mc donald",
+     "subCategoryTwoValue":"Fries Medium",
+     "quantity":null,
+     "createdDttm":null
+     },
+    {"partyId":21,
+     "userId":287,
+     "categoryId":1,
+     "subCategoryOneValue":"Subway",
+     "subCategoryTwoValue":"Sandwitch",
+     "quantity":null,
+     "createdDttm":null
+     },
+    {"partyId":21,
+     "userId":287,
+     "categoryId":2,
+     "subCategoryOneValue":"Soft Drinks",
+     "subCategoryTwoValue":"Coke",
+     "quantity":null,
+     "createdDttm":null
+     }
+
+ ]
+ 

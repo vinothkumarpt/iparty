@@ -9,5 +9,6 @@
         <mapping class="com.iparty.services.dao.entity.AdminIDSequenceEntity" />
         <mapping class="com.iparty.services.dao.entity.PartyUserEntity" />
         <mapping class="com.iparty.services.dao.entity.CategoryMasterEntity" />
+        <mapping class="com.iparty.services.dao.entity.PartyItemsEntity" />
     </session-factory>
 </hibernate-configuration>

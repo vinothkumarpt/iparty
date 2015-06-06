@@ -4,9 +4,6 @@
 package com.iparty.services.spring;
 
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +12,7 @@ import com.iparty.controllers.CommonController;
 import com.iparty.services.dao.IPartyServiceDAO;
 import com.iparty.services.dao.entity.CategoryMasterEntity;
 import com.iparty.services.dao.entity.PartyAdminEntity;
+import com.iparty.services.dao.entity.PartyItemsEntity;
 import com.iparty.services.dao.entity.PartyUserEntity;
 import com.iparty.services.service.IPartyService;
 import com.iparty.services.service.response.PartyResponse;
@@ -178,23 +176,109 @@ public class IPartyServiceSpringImpl implements IPartyService {
 		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
 		
 		PartyResponse response = new PartyResponse();
-		if(IPartyUtil.isNotNull(categoryMasterEntity)){
-			boolean categStatus = false;
-			try{
-				categStatus = ipartyServiceDAO.insertCategory(categoryMasterEntity);
-			}
-			catch(org.springframework.dao.DataIntegrityViolationException e){
-				new IPartyException(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_CATEGORY, e).log();
-				categStatus = false;
-				response.setComments(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_CATEGORY);
-			}
-			
-			if(categStatus){
-				response.setStatus(IPartyConstants.DB_STATE_SAVED);
-			}
+		boolean categStatus = false;
+		try{
+			categStatus = ipartyServiceDAO.insertCategory(categoryMasterEntity);
+		}
+		catch(org.springframework.dao.DataIntegrityViolationException e){
+			new IPartyException(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_CATEGORY, e).log();
+			categStatus = false;
+			response.setComments(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_CATEGORY);
 		}
 		
+		if(categStatus){
+			response.setStatus(IPartyConstants.DB_STATE_SAVED);
+		}
+	
+		return response;
+	}
+
+	@Override
+	public PartyResponse saveItems(PartyItemsEntity[] partyItemsEntity) {
 		
+		String methodName="saveItems";
+		
+		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
+		PartyResponse response = new PartyResponse();
+		
+		int partyId = 0;
+		String itemSaveStatus = null;
+		try{
+				for(PartyItemsEntity partyItem:partyItemsEntity){
+					if(partyId == 0){
+						partyId = partyItem.getPartyId();
+					}
+					
+					if(partyItem.getCreatedDttm() == null){
+						partyItem.setCreatedDttm(IPartyUtil.timeStampNow());
+					}
+					
+					//Calling DAO
+					ipartyServiceDAO.insertPartyItem(partyItem);
+				}
+				itemSaveStatus = IPartyConstants.DB_STATE_SAVED;
+			}
+		catch(org.springframework.dao.DataIntegrityViolationException e){
+			new IPartyException(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_CATEGORY, e).log();
+			itemSaveStatus = IPartyConstants.DB_STATE_NOT_SAVED;
+			response.setComments(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_CATEGORY);
+		}
+		finally{
+			response.setPartyId(partyId);
+			response.setStatus(itemSaveStatus);
+		}
+		
+		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName)); 
+		return response;
+	}
+
+	@Override
+	public PartyResponse deleteItems(PartyItemsEntity[] partyItemsEntity) {
+		
+		String methodName="deleteItems";
+		
+		logger.debug(IPartyUtil.getMethodEnterMessage(CLASS_NAME, methodName)); 
+		
+		PartyResponse response = new PartyResponse();
+	
+		int itemDeletedCount = IPartyConstants.INT_ZERO;
+		
+		itemDeletedCount = ipartyServiceDAO.deletePartyItem(partyItemsEntity);
+		
+		if(itemDeletedCount == IPartyConstants.INT_ZERO){
+			response.setStatus(IPartyConstants.DB_STATE_NOT_DELETED);
+		}else{
+			response.setStatus(IPartyConstants.DB_STATE_DELETED);
+		}
+		
+		response.setRecordCount(itemDeletedCount);
+
+				/*try{
+						for(PartyItemsEntity partyItem:partyItemsEntity){
+							if(partyId == 0){
+								partyId = partyItem.getPartyId();
+							}
+							
+							if(partyItem.getCreatedDttm() == null){
+								partyItem.setCreatedDttm(IPartyUtil.timeStampNow());
+							}
+							
+							//Calling DAO
+							ipartyServiceDAO.insertPartyItem(partyItem);
+						}
+						
+					}
+				catch(org.springframework.dao.DataIntegrityViolationException e){
+					new IPartyException(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_CATEGORY, e).log();
+					itemSaveStatus = IPartyConstants.DB_STATE_NOT_SAVED;
+					response.setComments(IPartyConstants.EXCEP_MESSAGE_DUPLICATE_CATEGORY);
+				}
+				finally{
+					response.setPartyId(partyId);
+					response.setStatus(itemSaveStatus);
+				}*/
+	
+		logger.debug(IPartyUtil.getMethodExitMessage(CLASS_NAME, methodName)); 
 		return response;
 	}
 }

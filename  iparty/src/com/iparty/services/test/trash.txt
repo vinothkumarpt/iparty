@@ -1,0 +1,2 @@
+URL: http://localhost:8090/iparty/rest/service/trash?adminId=145&partyId=25
+Method: GET
